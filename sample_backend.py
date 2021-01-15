@@ -85,7 +85,7 @@ def get_users():
         uniqueIdSet.add(newId)
         userToAdd['id'] = newId
         users['users_list'].append(userToAdd)
-        resp = jsonify(success=True)
+        resp = jsonify(success=True, obj=userToAdd)
         resp.status_code = 201
         return resp
 
