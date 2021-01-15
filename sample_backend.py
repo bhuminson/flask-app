@@ -62,7 +62,12 @@ def get_user(id):
             for user in users['users_list']:
                 if user['id'] == id:
                     users['users_list'].remove(user)
-            return users
+                    resp = jsonify(success=True)
+                    resp.status_code = 204
+                    return resp
+            resp = jsonify(success=False)
+            resp.status_code = 404
+            return resp
 
 
 @app.route('/users', methods=['GET', 'POST'])
