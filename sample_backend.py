@@ -82,6 +82,7 @@ def get_users():
         newId = createNewID()
         while newId in uniqueIdSet:
             newId = createNewID()
+        uniqueIdSet.add(newId)
         userToAdd['id'] = newId
         users['users_list'].append(userToAdd)
         resp = jsonify(success=True)
