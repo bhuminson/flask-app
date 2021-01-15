@@ -1,6 +1,9 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+from random import choices
+from random import randint
+from string import ascii_lowercase
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -36,6 +39,8 @@ users = {
         }
     ]
 }
+
+uniqueIdSet = {"xyz789", "abc123", "ppp222", "yat999", "zap555"}
 
 
 @app.route('/')
@@ -74,7 +79,17 @@ def get_users():
         return users
     elif request.method == 'POST':
         userToAdd = request.get_json()
+        newId = createNewID()
+        while newId in uniqueIdSet:
+            newId = createNewID()
+        userToAdd['id'] = newId
         users['users_list'].append(userToAdd)
         resp = jsonify(success=True)
         resp.status_code = 201
         return resp
+
+
+def createNewID():
+    chars = "".join(choices(ascii_lowercase, k=3))
+    nums = randint(0, 999)
+    return chars + ("%03d" % nums)
